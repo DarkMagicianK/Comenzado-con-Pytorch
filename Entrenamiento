@@ -1,0 +1,44 @@
+Pasos generales para tener en cuenta
+
+            ## TODO: Step 0 - Carda datos y etiquetas
+			data_inputs = data_inputs.to(device)
+            data_labels = data_labels.to(device).float()
+            
+			## TODO: Step 1 - poner los gradientes a cero en cada iteración
+			model. zero_grad()
+			
+            ## TODO: Step 2 - Run the model on the input data
+            preds = model(data_inputs).squeeze(dim=1);
+            #print("epoch y preds: ",epoch, preds)
+            
+            ## TODO: Step 3 - Calculate the loss using the module loss_module
+            loss = loss_module(preds,data_labels)
+            
+            ## TODO: Step 4 - Perform backpropagation
+            optimizer.zero_grad()
+            loss.backward()
+            
+            ## TODO: Step 5 - Update parameters
+            #optimizer.zero_grad()
+            optimizer.step()
+			
+			
+      Ejemplo: 
+      
+from torch.autograd import Variable #necesario para calcular gradientes
+for e in range(epochs):
+    for i, (images, tags) in enumerate(image_loader):
+        1.- images, tags = Variable(images), Variable(tags) #Convertir a variable para derivación
+		
+		2.- classifier.zero_grad() #poner los gradientes a cero en cada iteración
+        
+		3.- output = classifier(images) #calcular la salida para una imagen
+        
+		4.- error = loss_function(output, tags) #calcular el error
+        error.backward() #obtener los gradientes y propagar
+        
+		5.- optimizer.step() #actualizar los pesos con los gradientes
+        
+		iterations += 1
+        
+		losses = np.append(losses,error.item())
